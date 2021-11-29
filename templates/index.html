@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Generate Your Ticket</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="/static/reset.css">
+    <link rel="stylesheet" href="/static/common.css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Alata&amp;display=swap', 'Quicksand:300,400,700&amp;display=swap"
+        rel="stylesheet">
+</head>
+<body>
+
+    <header></header>
+
+    <main role="main">
+
+        <div class="container">
+            <div class="heading">
+                <h1>Mentimeter</h1>
+                <h3>Please enter your code</h3>
+            </div>
+
+            <div>
+                <form action="{{ url_for('index') }}" method="POST">
+                    <input id="user_input" type="text" name="msg" required placeholder="Ex: UpseESLi">
+                    <input id="submit" type="submit" value="Show Ticket">
+                </form>
+
+                <div id="hidden_div">
+                    <div id="f_1">
+                        {% if input_from_user %}
+                        {{input_from_user}}
+                        {% endif %}
+                    </div>
+                    <div id="f_2">
+                        {% if output_for_user %}
+                        {{output_for_user}}
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <br>
+
+            </div>
+
+            <span>
+                <p>The code is given after a successful purchase</p>
+            </span>
+
+        </div>
+        
+    </main>
+
+    <footer>&copy; 2021 - All rights reserved</footer>
+</body>
+</html>
