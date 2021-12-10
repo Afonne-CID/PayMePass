@@ -28,10 +28,7 @@ def get_result(form):
     input = request.form['msg']
     result.append("Ticket for: " + input)
 
-    if (is_monthend(datetime.date.today())):
-        process()
-    else:
-        luck_bags = reload("file.json")
+    luck_bags = reload("file.json")
 
     if (input not in luck_bags.keys()):
         error_msg = "Invalid purchase code"
@@ -101,4 +98,4 @@ def is_monthend(ref_date):
 
 
 if __name__ == '__main__':
-    app.run(debug=False, host="0.0.0.0")
+    app.run(debug=False, host="127.0.0.1", port="5500")
