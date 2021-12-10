@@ -19,13 +19,14 @@
 
         <div class="container">
             <div class="heading">
-                <h1>Mentimeter</h1>
-                <h3>Please enter your code</h3>
+                <h1>PayMePass</h1>
+                <h3>Please enter your Phone</h3>
             </div>
 
             <div>
                 <form action="{{ url_for('index') }}" method="POST">
-                    <input id="user_input" type="text" name="msg" required placeholder="Ex: UpseESLi">
+                    <input id="user_input" type="tel" name="msg" placeholder="Format: 08123456789"
+                    pattern="[0-9]{11}" required>
                     <input id="submit" type="submit" value="Show Ticket">
                 </form>
 
@@ -47,7 +48,7 @@
             </div>
 
             <span>
-                <p>The code is given after a successful purchase</p>
+                <p>This phone number is where you'll receive your Christmass Airtime Gift</p>
             </span>
 
         </div>
