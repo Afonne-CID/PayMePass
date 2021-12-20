@@ -36,7 +36,10 @@ body {
 .heading h1 {
     font-size: 4rem;
     font-weight: bold;
-}
+    font-size: 72px;
+    background: -webkit-linear-gradient(#F5845C, rgb(8, 107, 255));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;}
 
 /* Heading h3 style */
 .heading h3 {
@@ -76,13 +79,17 @@ form input {
             box-sizing: border-box;
 }
 
+form input[type=tel] {
+    border: 2px solid #F5845C !important;
+}
+
 /* Form submit style */
 #submit {
     font-size: 20px;
     text-align: center;
     font-weight: bold;
     background-color: #196CFF;
-    color: #fff;
+    color: #F5845C;
     height: 48px;
     border: none;
     align-items: center;
@@ -143,6 +150,35 @@ form input {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
          box-sizing: border-box;
+}
+
+/* Instructions class  style */
+.instructions {
+    background-color: rgba(236, 230, 230, 0.8);
+    width: 100%;
+    height: 100px;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 15px;
+}
+
+.instructions h2 {
+    margin: 10px;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.instructions li {
+    padding: 2px 0 5px 0;
+    margin-left: 20px;
+}
+
+.instructions b {
+    font-weight: bold;
+}
+
+.instructions a {
+    text-decoration: none;
 }
 
 /* Footer style */

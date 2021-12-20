@@ -1,5 +1,6 @@
-import shortuuid
 import json
+import shortuuid
+from validate_nigerian_phone import NigerianPhone
 from flask import Flask, request, render_template, url_for
 
 app = Flask(__name__)
@@ -14,36 +15,61 @@ def index():
     if request.method == 'POST':
         form = request.form
         output = get_result(form)
+
         input_from_user = str(output[0])
         output_for_user = str(output[1])
 
     return render_template('index.html', output_for_user=output_for_user, input_from_user=input_from_user)
 
+def valid_number(input):
+    """ Validates `input` phone number
+    """
+    if (NigerianPhone(input).is_valid()):
+        return str(NigerianPhone(input).get_network()).lower()
+    else:
+        return "invalid phone"
+
 def get_result(form):
     """Process input and generates result for user
     """
     result = []
-    input = str(request.form['msg'])
-    result.append("Ticket for: " + input)
-    
-    value = shortuuid.uuid()[:8]
-    key = input
+    ticket = str(shortuuid.uuid()[:8])
+    phone = str(request.form['msg'])
+    gift = ""
+    network = valid_number(phone)
+    result.append("Ticket for: " + phone + ' (' + network + ')')
 
-    luck_bag = reload("luck_bag.json")
-    if (key not in luck_bag.keys()):
-        luck_bag[key] = value
-        result.append(value)
-        save(luck_bag)
-        phone_num(luck_bag)
+    registered_users = reload("registered_users.json")
+    if (network == "invalid phone"):
+            result.append("invalid phone")
+
+    elif ((network not in registered_users.keys()
+            or registered_users == {})):
+        registered_users[network] = {}
+        registered_users[network][ticket] = [phone, gift]
+        result.append(ticket)
+        save(registered_users)
+        phone_num(registered_users)
+
+    elif ((network in registered_users.keys()
+            and ticket not in registered_users[network].keys())):
+        registered_users[network][ticket] = [phone, gift]
+        result.append(ticket)
+        save(registered_users)
+        phone_num(registered_users)
+        
     else:
-        result.append(luck_bag[key])
+        for each in registered_users[network].keys():
+            user = registered_users[network][each]
+            if phone == user[0]:
+                result.append(each)
 
     return result
 
 def save(a_dict):
     """Serializes a_dict to a file
     """
-    with open("luck_bag.json", "w") as f:
+    with open("registered_users.json", "w") as f:
         json.dump(a_dict, f, indent=6)
 
 def reload(file):
@@ -63,6 +89,7 @@ def phone_num(a_dict):
     phones = '\n'.join(raw)
     with open("Phone Nos.txt", "w") as f:
         f.write(phones)
+
 
 if __name__ == '__main__':
     app.run(debug=False, host="127.0.0.1", port="5500")
